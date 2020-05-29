@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>
+            share screen
+        </title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/index.css">
+    </head>
+    <body>
+        <div>
+            Hello welcome to share screen
+        </div>
+
+        <div>
+            <button id="create-btn">Create room</button>
+        </div>
+
+        <div>
+            <label>Join screen sharing session</label>
+            <input id="join-btn" type="text" placeholder="Invitation code..."/>
+        </div>
+        <button id="start-btn">Start sharing your screen</button>
+        <button id="stop-btn">Stop sharing your screen</button>
+        <button id="show-btn">Show connections</button>
+        <div id="user-space" class="user-space">
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <script src="js/index.js"></script>
+        <script src="https://unpkg.com/mithril/mithril.js"></script>
+        
+        
+    </body>
+</html>
