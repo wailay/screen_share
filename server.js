@@ -10,13 +10,8 @@ app.use(express.static('public'));
 var currentId;
 var users = {};
 
-app.use((req, res, next) => {
 
-    console.log('ip is ', req.headers['x-forwarded-for'] || req.connection.remoteAddress);
-    next();
-})
-
-app.get(['/:id', '/'] , (req, res) => {
+app.get(['/*'] , (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
@@ -31,6 +26,7 @@ io.on('connection' , (socket) => {
             // console.log(' a room ', socket.rooms);
         });
         
+        console.log(users);
         if (!users[id]){
             users[id] = {};
         }
@@ -70,6 +66,7 @@ io.on('connection' , (socket) => {
         
         //broadcast the answer to the transmitting socket
         io.to(transmittingSocketId).emit('answer', answer ,username);
+        
     });
 
     socket.on('icecandidate', (candidate, clientSocketId, username) => {
@@ -92,6 +89,12 @@ io.on('connection' , (socket) => {
             if (users[room]){
                 io.to(room).emit('user_disconnected', users[room][socket.id]);
                 delete users[room][socket.id];
+                console.log('test ' ,)
+
+                if (!Object.entries(users[room]).length) {
+                    console.log('l ' , users[room])
+                    delete users[room];
+                }
             }
         }
 
