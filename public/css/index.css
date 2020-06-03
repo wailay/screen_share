@@ -1,24 +1,37 @@
+.top-bar {
+    padding: 15px;
+    display : flex;
+}
 .user-space {
-    margin : auto;
-    margin-top : 50px;
     display: flex;
+    flex-wrap : nowrap;
+    overflow-y: auto;
+    flex-direction: column;
     background-color : lightgray;
-    justify-content : center;
-    flex-wrap : wrap;
     transition: 0.5s;
+    width: 450px;
+    height : 91vh;
+    float : right;
+    border-radius : 4px;
+
 }
 
 .user {
-    width: 640px;
-    height : 360px;
-    margin : 10px;
+    width: 400px;
+    height : 225px;
+    margin : auto;
+    margin-top : 15px;
+    margin-bottom : 15px;
     border-radius : 20px;
     background-color: rgb(16, 95, 165);
     transition: 0.2s;
     position : relative;
     overflow: hidden;
-    
-    
+    flex : 0 0 auto;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);   
+}
+.me {
+    background-color: rgb(190, 10, 94);
 }
 
 .username {
@@ -62,9 +75,121 @@
     color : white;
 }
 
+.main-screen {
+    margin: 30px 30px 30px 80px;
+    width : 1280px;
+    height : 720px;
+    border : 1px solid blue;
+    border-radius : 20px;
+    background-color: rgb(16, 95, 165);
+}
 
+.chat-space {
+    width : 95%;
+    min-width: 400px;
+    max-width : 1000px;
+    height : 92vh;
+    min-height : 200px;
+    max-height : 300px;
+    margin : auto;
+    margin-top : 40px;
+    position: relative;
+    border-top : 6px solid violet;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    border-radius : 4px;
+}
+.wrap {
+    position: relative;
+}
+.chat-message {
+    width : 100%;
+    position : absolute;
+    bottom : 0;
+}
+
+.send-btn {
+    padding: 5px;
+    cursor: pointer;
+}
+.chat-input {
+    border : none;
+    min-width : calc(100% - 105px);
+    background-color : hsl(220, 12%, 95%);
+    padding : 10px;
+    z-index: 100;
+}
+.all-messages {
+    height: auto;
+    min-height : calc(100% - 40px);
+    max-height : calc(100% - 40px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.message {
+    margin : 15px 0 15px 5px;
+    
+}
+.message p {
+    font-weight: 200;
+    line-height: 130%;
+}
+
+.user-typing{
+    z-index: 200;
+    top : -25px;
+    position : relative;
+    margin: 0 0 10px 20px;
+    font-style: italic;
+    font-weight: 100;
+    font-size : 15px;
+
+}
+.user-typing-text {
+    display : inline-block;
+    margin-right : 5px;
+}
+.dot-container {
+    display: inline-block;
+}
+.dot-container .dot {
+    /* display: inline; */
+    background-color: #90949c;
+}
+
+.dot {
+    animation: dots 1.5s infinite ease-in-out;
+    border-radius: 2px;
+    display: inline-block;
+    height: 4px;
+    margin-right: 2px;
+    width: 4px;
+}
+
+@keyframes dots{
+0%{
+  transform:translateY(0px)
+}
+28%{
+  transform:translateY(-5px)
+}
+44%{
+  transform:translateY(0px)
+}
+}
+
+.dot:nth-child(1){
+animation-delay:200ms;
+}
+.dot:nth-child(2){
+animation-delay:300ms;
+}
+.dot:nth-child(3){
+animation-delay:400ms;
+}
 body {
     margin: 0;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
@@ -77,11 +202,5 @@ body {
   }
   
   * {
-    /* Prevent text selection highlight on all browsers */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-    -khtml-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    user-select: none; 
+      box-sizing : border-box;
   }

@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
+const options = {
+	key : fs.readFileSync('./key.pem'),
+	cert : fs.readFileSync('./cert.pem'),
+};
 var adj = require('./adj.json');
 var names = require('./name.json'); 
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var https = require('https').createServer(options, app);
+var io = require('socket.io')(https);
 
 app.use(express.static('public'));
 
@@ -82,6 +87,17 @@ io.on('connection' , (socket) => {
         socket.to(id).emit('stop_sharing', username);
     });
 
+    socket.on('message', (id, msg, username) => {
+        socket.to(id).emit('new_message', msg, username);
+    });
+
+    socket.on('user_typing', (id, username) => {
+        socket.to(id).emit('user_typing', username);
+    });
+
+    socket.on('user_stopped_typing', (id) => {
+        socket.to(id).emit('user_stopped_typing');
+    });
     socket.on('disconnecting', () => {
         const rooms = socket.rooms;
 
@@ -107,7 +123,7 @@ io.on('connection' , (socket) => {
 //     console.log('user conn to namespace ')
 //     console.log('ther are many users ')
 // });
-http.listen(3000, () => {
+https.listen(3000, () => {
     console.log('listening on port 3000');
 });
 

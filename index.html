@@ -10,26 +10,54 @@
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
-        <div>
-            Hello welcome to share screen
+
+        
+        <div class="top-bar">
+            Site Title
+            <p> github icon </p>
         </div>
 
-        <div>
+        <!-- <div>
             <button id="create-btn">Create room</button>
-        </div>
-
-        <div>
-            <label>Join screen sharing session</label>
-            <input id="join-btn" type="text" placeholder="Invitation code..."/>
-        </div>
+        </div> -->
         <button id="start-btn">Start sharing your screen</button>
         <button id="stop-btn">Stop sharing your screen</button>
         <button id="show-btn">Show connections</button>
         <div id="user-space" class="user-space">
         </div>
+        <div class="main-screen">
+            <video class="shared-screen"></video>
+        </div>
+        <!-- <div id="chat-space" class="chat-space">
+
+            <div class="all-messages">
+                <div id="message-list" class="message-list">
+
+                </div>
+            </div>
+            <div id="user-typing" class="user-typing">
+                <div id="user-typing-text" class="user-typing-text"></div>
+                <div class="dot-container">
+                    <div class="dot-block">
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                    </div>
+                  </div>
+            </div>
+            <div class="chat-message">
+                <div class="wrap">
+                    <input id="chat-input" class="chat-input" type="text" placeholder="Send a message ..." value="">
+                    <div class="material-icons send-btn" id="send-btn">send</div>
+                </div>
+            </div>
+
+            
+        </div> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-        <script src="js/index.js"></script>
-        <script src="https://unpkg.com/mithril/mithril.js"></script>
+        <script type="module" src="js/socket.js"></script>
+        <script type="module" src="js/index.js"></script>
+        <script type="module" src="js/chat.js"></script>
         
         
     </body>

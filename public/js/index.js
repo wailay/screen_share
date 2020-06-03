@@ -1,4 +1,6 @@
 
+import socket from './socket.js';
+
 const create = document.getElementById("create-btn");
 const join = document.getElementById("join-btn");
 const start = document.getElementById("start-btn");
@@ -8,13 +10,14 @@ const userSpace = document.getElementById("user-space");
 const servers = {
     'iceServers': [{ urls: 'stun:stun.l.google.com:19302' }]
 };
-
+sessionStorage.clear();
 start.disabled = false;
 stop.disabled = true;
 const base62chars = [..."0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"]
 
 console.log("refreshed");
-const socket = io.connect();
+// const socket = io.connect();
+
 
 var users = [];
 var clientSocketId;
@@ -34,7 +37,7 @@ function removeUser(username) {
 
 function displayCurrentUser(id, username) {
     let user = document.createElement("div");
-    user.className = "user";
+    user.className = "user me";
     user.id = "me";
 
     let video = document.createElement("video");
@@ -123,10 +126,7 @@ function initSession() {
     console.log('init session wesh');
     socket.emit('join_session', id);
     roomId = id;
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    window.sessionStorage.setItem('room', id);
 }
 
 
@@ -301,6 +301,7 @@ socket.on('username', (socketId, username) => {
     console.log('this client is ', socketId, username);
     clientSocketId = socketId;
     clientUsername = username;
+    window.sessionStorage.setItem('username', username);
     start.disabled = false;
     displayCurrentUser(socketId, username);
 });
@@ -350,17 +351,22 @@ function showConn() {
         console.log(connections[username].getReceivers());
     }
 }
-create.addEventListener("click", createSession);
+// create.addEventListener("click", createSession);
 start.addEventListener("click", startSharing);
 stop.addEventListener("click", stopSharing);
 show.addEventListener("click", showConn);
+userSpace.addEventListener("scroll", onScroll);
 initSession();
 
+function onScroll(e){
+    console.log(userSpace.scrollTop);
+}
 
 function enlargeUser(e) {
     e.stopPropagation();
     let icon = e.srcElement
     let user = icon.parentElement;
+    console.log(user);
     let type = 'fullscreen';
     if (icon.innerHTML === 'fullscreen') {
         type = 'fullscreen_exit';
@@ -371,10 +377,8 @@ function enlargeUser(e) {
         user.style.width = "1366px";
         user.style.height = "768px";
     } else {
-        user.style.width = "640px";
-        user.style.height = "360px";
+        user.style.width = "400px";
+        user.style.height = "225px";
     }
-    console.log(e, icon, user, type);
-    // console.log(e, user);
 
 }
