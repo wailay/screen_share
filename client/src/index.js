@@ -1,36 +1,21 @@
 
 import socket from './socket.js';
-
-const create = document.getElementById("create-btn");
-const join = document.getElementById("join-btn");
-const start = document.getElementById("start-btn");
-const stop = document.getElementById("stop-btn");
-const vid = document.getElementById("screen");
 const userSpace = document.getElementById("user-space");
 const servers = {
-    'iceServers': [{ urls: 'stun:stun.l.google.com:19302' }]
+    'iceServers': [{ urls: 'stun:stun.split.lol:5349' }]
 };
 sessionStorage.clear();
-start.disabled = false;
-stop.disabled = true;
+
 const base62chars = [..."0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"]
 
-console.log("refreshed");
-// const socket = io.connect();
 
-
-var users = [];
 var clientSocketId;
 var clientUsername;
 var roomId;
-var userCurrentlySharing;
 var connections = {};
 var stream;
 var isSharing = false;
 
-function removeUserSpaceChildren() {
-    userSpace.querySelectorAll("*").forEach(c => c.remove());
-}
 function removeUser(username) {
     document.getElementById(username).remove();
 }
@@ -42,7 +27,7 @@ function displayCurrentUser(id, username) {
 
     let video = document.createElement("video");
     video.className = "shared-screen";
-    video.id = "screen";
+    video.id = "my-screen";
     video.autoplay = true;
     video.muted = true;
     video.srcObject = null;
@@ -55,14 +40,29 @@ function displayCurrentUser(id, username) {
     usernameDiv.innerHTML = username;
 
     let fullscreenImg = document.createElement("div");
-    fullscreenImg.className = "material-icons fullscreen-icon  icon-container";
+    fullscreenImg.className = "material-icons icon fullscreen-icon  icon-container";
     fullscreenImg.innerHTML = "fullscreen";
-    fullscreenImg.onclick = enlargeUser;
+    // fullscreenImg.onclick = enlargeUser;
+
+    let shareScreenIcon = document.createElement("div");
+    shareScreenIcon.className = "material-icons icon share-screen-icon icon-container";
+    shareScreenIcon.innerHTML = "screen_share";
+    shareScreenIcon.onclick = startSharing;
+    shareScreenIcon.id = "my-share-icon";
+
+    let stopShareScreenIcon = document.createElement("div");
+    stopShareScreenIcon.className = "material-icons icon share-screen-icon icon-container";
+    stopShareScreenIcon.innerHTML = "stop_screen_share";
+    stopShareScreenIcon.onclick = stopSharing;
+    stopShareScreenIcon.style.display = "none";
+    stopShareScreenIcon.id = "my-stop-share-icon";
 
 
     user.appendChild(video);
     user.appendChild(usernameDiv);
     user.appendChild(fullscreenImg);
+    user.appendChild(shareScreenIcon);
+    user.appendChild(stopShareScreenIcon);
 
     userSpace.appendChild(user);
 }
@@ -86,7 +86,7 @@ function displayJoinedUser(id, username) {
     usernameDiv.innerHTML = username;
 
     let fullscreenImg = document.createElement("div");
-    fullscreenImg.className = "material-icons fullscreen-icon icon-container";
+    fullscreenImg.className = "material-icons icon fullscreen-icon icon-container";
     fullscreenImg.innerHTML = "fullscreen";
     fullscreenImg.onclick = enlargeUser;
 
@@ -131,15 +131,9 @@ function initSession() {
 
 
 function createRTCConnection(username, socketId) {
-    let conn = new RTCPeerConnection(servers);
+    console.log('creating rtc connection with username ,', username);
 
-    // conn.onicecandidate = handleICECandidateEvent;
-    // conn.onnegotiationneeded = handleNegotiationNeededEvent;
-    // conn.ontrack = handleTrackEvent;
-    // conn.onremovetrack = handleRemoveTrack;
-    // conn.oniceconnectionstatechange = handleICEConnectionStateChange;
-    // conn.onicegatheringstatechange = handleICEGatheringStateChange;
-    // conn.onsignalingstatechange = handleSignalingStateChange;
+    let conn = new RTCPeerConnection(servers);
 
     conn.ontrack = e => {
         let user = document.getElementById(username);
@@ -152,7 +146,7 @@ function createRTCConnection(username, socketId) {
     
     conn.onnegotiationneeded = async (e) => {
         try {
-            console.log("nego needed")
+
             let offer = await conn.createOffer();
             await conn.setLocalDescription(offer);
             socket.emit('offer', conn.localDescription, socketId, clientUsername, clientSocketId);
@@ -162,16 +156,13 @@ function createRTCConnection(username, socketId) {
     }
 
     conn.onicecandidate = e => {
-        console.log("onicecandidate fired ! ");
-
         if (e.candidate) {
-            console.log("emitting icecandidate ");
             socket.emit('icecandidate', e.candidate, socketId, clientUsername);
         }
     }
 
     conn.onconnectionstatechange = e => {
-        console.log("on conn state change ! ", e, conn.connectionState);
+        
     }
 
     return conn;
@@ -180,11 +171,15 @@ function createRTCConnection(username, socketId) {
 async function sendOfferToPeer(username, remoteSocketId) {
     try {
         console.log('sending offer to peer');
-        let rtcConn = createRTCConnection(username, remoteSocketId);
-        connections[username] = rtcConn;
+        let rtcConn;
+        if (!connections[username]){
+            console.log('connections not existent creating new one');
+            connections[username] = createRTCConnection(username, remoteSocketId);
+        }
+        
+        rtcConn = connections[username];
 
         for (const track of stream.getTracks()) {
-            console.log('adding track to stream');
             rtcConn.addTrack(track, stream);
         }
 
@@ -201,7 +196,6 @@ socket.on('offer', async (offer, username, localSocketId) => {
         console.log('received offer from ', username);
 
         if (!connections[username]) {
-            console.log('creating connections as ', username);
             connections[username] = createRTCConnection(username, localSocketId);
         }
         // console.log('got offer from ', username, connections);
@@ -222,12 +216,12 @@ socket.on('offer', async (offer, username, localSocketId) => {
 
 socket.on('answer', (answer, username) => {
     //local peer
-    console.log('received answer ', answer, username);
+    console.log('received answer from', username);
     let answerRTC = new RTCSessionDescription(answer);
     let rtcConn = connections[username];
     rtcConn.setRemoteDescription(answerRTC)
         .then(() => {
-            console.log("trickle ? ", rtcConn.canTrickleIceCandidates);
+            return;
         });
 
 
@@ -236,8 +230,16 @@ socket.on('answer', (answer, username) => {
 
 async function startSharing() {
     try {
-
         if (!isSharing) {
+
+            
+            let video = document.getElementById('my-screen');
+            let shareIcon = document.getElementById('my-share-icon');
+            let stopIcon = document.getElementById('my-stop-share-icon');
+
+            
+            isSharing = true;
+            
             stream = await navigator.mediaDevices.getDisplayMedia({
                 video: { width: 1366, height: 768, frameRate: 30 },
                 audio: false
@@ -245,28 +247,30 @@ async function startSharing() {
             stream.onended = e => {
                 console.log('stream ended');
             }
-            //set screen of the current client 
-            let user = document.getElementById("me");
-            let video = user.childNodes[0];
+
+            shareIcon.style.display = 'none';
+            stopIcon.style.display = 'block';
             video.srcObject = stream;
-            isSharing = true;
-            start.disabled = true;
-            stop.disabled = false;
             video.hidden = false;
             socket.emit('start_sharing', roomId);
         }
     } catch (err) {
-        console.log(err);
+        isSharing = false;
     }
 }
 
 function stopSharing() {
 
-    start.disabled = false;
-    stop.disabled = true;
     stream.getTracks().forEach(track => track.stop());
-    let user = document.getElementById("me");
-    let video = user.childNodes[0];
+    let video = document.getElementById("my-screen");
+    let shareIcon = document.getElementById('my-share-icon');
+    let stopIcon = document.getElementById('my-stop-share-icon');
+    
+    shareIcon.style.display = 'block';
+    stopIcon.style.display = 'none';
+
+    shareIcon.disabled = false;
+    stopIcon.disabled = true;
     video.hidden = true;
     isSharing = false;
     socket.emit('stop_sharing', roomId, clientUsername);
@@ -278,7 +282,6 @@ function stopSharing() {
 
 
 socket.on('shared_screen', (users) => {
-    console.log(users);
     for (let [id, username] of Object.entries(users)) {
         if (username !== clientUsername) {
             console.log('start sharing ', username, id);
@@ -288,7 +291,6 @@ socket.on('shared_screen', (users) => {
 })
 
 socket.on('stop_sharing', (username) => {
-    console.log('host stopped sharing');
     let user = document.getElementById(username);
     let video = user.childNodes[0];
     video.srcObject = null;
@@ -302,7 +304,6 @@ socket.on('username', (socketId, username) => {
     clientSocketId = socketId;
     clientUsername = username;
     window.sessionStorage.setItem('username', username);
-    start.disabled = false;
     displayCurrentUser(socketId, username);
 });
 
@@ -336,14 +337,12 @@ socket.on('user_disconnected', (username) => {
 
 
 socket.on('icecandidate', (candidate, username) => {
-    console.log('got icecandidate from adding it !');
+
     let candidiateRTC = new RTCIceCandidate(candidate);
     connections[username].addIceCandidate(candidiateRTC);
 });
 
-var show = document.getElementById("show-btn");
 function showConn() {
-    console.log(connections);
 
     for (let [username, conn] of Object.entries(connections)) {
         console.log('checking connections : ', username);
@@ -351,34 +350,17 @@ function showConn() {
         console.log(connections[username].getReceivers());
     }
 }
-// create.addEventListener("click", createSession);
-start.addEventListener("click", startSharing);
-stop.addEventListener("click", stopSharing);
-show.addEventListener("click", showConn);
-userSpace.addEventListener("scroll", onScroll);
+
 initSession();
 
-function onScroll(e){
-    console.log(userSpace.scrollTop);
-}
 
 function enlargeUser(e) {
     e.stopPropagation();
     let icon = e.srcElement
     let user = icon.parentElement;
-    console.log(user);
-    let type = 'fullscreen';
-    if (icon.innerHTML === 'fullscreen') {
-        type = 'fullscreen_exit';
-    }
-    icon.innerHTML = type;
+    let userVideo = user.childNodes[0];
+    let mainVideo = document.getElementById("main-video");
 
-    if (user.style.width !== "1366px") {
-        user.style.width = "1366px";
-        user.style.height = "768px";
-    } else {
-        user.style.width = "400px";
-        user.style.height = "225px";
-    }
+    mainVideo.srcObject = userVideo.srcObject;
 
 }

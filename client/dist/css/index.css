@@ -1,6 +1,13 @@
 .top-bar {
     padding: 15px;
     display : flex;
+    justify-content : space-between;
+}
+
+.container {
+    display: grid;
+    grid-template-columns : 366px 1366px auto;
+    /* grid-gap : 0.5rem; */
 }
 .user-space {
     display: flex;
@@ -9,21 +16,37 @@
     flex-direction: column;
     background-color : lightgray;
     transition: 0.5s;
-    width: 450px;
-    height : 91vh;
-    float : right;
-    border-radius : 4px;
 
+}
+.main-screen {
+    /* margin: 30px 30px 30px 10px; */
+    /* width : 1280px;
+    height : 720px; */
+    width: 100%;
+    height : 100%;
+    /* width: 1366;
+    height : 751px; */
+    /* border : 1px solid blue; */
+    /* border-radius : 20px; */
+    background-color: rgb(0, 0, 0);
+}
+
+.chat-space {
+    width : 100%;
+    height : 100%;
+    margin : auto;
+    position: relative;
+    border-top : 6px solid violet;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    border-radius : 4px;
 }
 
 .user {
-    width: 400px;
-    height : 225px;
-    margin : auto;
-    margin-top : 15px;
-    margin-bottom : 15px;
-    border-radius : 20px;
-    background-color: rgb(16, 95, 165);
+    width: auto;
+    height : 22%;
+    margin : 15px;
+    border-radius : 10px;
+    background-color: rgb(30, 65, 97);
     transition: 0.2s;
     position : relative;
     overflow: hidden;
@@ -35,9 +58,6 @@
 }
 
 .username {
-    position : absolute;
-    bottom : 0;
-    left : 0;
     margin : 15px;
     padding: 5px 7px 5px 7px;
     background-color: rgba(20, 19, 19, 0.349);
@@ -45,6 +65,8 @@
     color: white;
     font-weight: 500;
     transition : 0.5s;
+    user-select: none;
+    display: inline-block;
 }
 .user:hover > .username {
     background-color: rgba(20, 19, 19, 0.678);
@@ -56,6 +78,18 @@
     height : 100%;
     pointer-events: none;
 }
+.icon {
+    position : absolute;
+    color: rgba(255, 255, 255, 0.795);
+    transition : 0.5s;
+    bottom : 0;
+    right : 0;
+    cursor: pointer;
+}
+
+.icon:hover {
+    color : white;
+}
 
 .icon-container {
     background-color: rgba(20, 19, 19, 0.349);
@@ -63,41 +97,16 @@
     padding : 2px;
 }
 .fullscreen-icon {
-    position : absolute;
-    bottom : 0;
-    right : 0;
     margin: 5px 15px 15px 0;
-    color: rgba(255, 255, 255, 0.795);
-    transition : 0.5s;
 }
 
-.fullscreen-icon:hover {
-    color : white;
+.share-screen-icon {
+    margin: 5px 55px 15px 0px;
 }
 
-.main-screen {
-    margin: 30px 30px 30px 80px;
-    width : 1280px;
-    height : 720px;
-    border : 1px solid blue;
-    border-radius : 20px;
-    background-color: rgb(16, 95, 165);
-}
 
-.chat-space {
-    width : 95%;
-    min-width: 400px;
-    max-width : 1000px;
-    height : 92vh;
-    min-height : 200px;
-    max-height : 300px;
-    margin : auto;
-    margin-top : 40px;
-    position: relative;
-    border-top : 6px solid violet;
-    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
-    border-radius : 4px;
-}
+
+
 .wrap {
     position: relative;
 }

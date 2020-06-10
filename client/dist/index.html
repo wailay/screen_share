@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>
+        share screen
+    </title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+
+    <div class="top-bar">
+        <p>Screen Share</p>
+        <img style="width:32px;height:32px" src="images/github.png" />
+    </div>
+
+    <div class="container">
+
+        <div id="user-space" class="user-space"></div>
+        
+        <div class="main-screen">
+            <video id="main-video" class="shared-screen" muted autoplay></video>
+        </div>
+        
+        <div id="chat-space" class="chat-space">
+
+            <div class="all-messages">
+                <div id="message-list" class="message-list"></div>
+            </div>
+
+            <div id="user-typing" class="user-typing">
+                <div id="user-typing-text" class="user-typing-text"></div>
+                <div class="dot-container">
+                    <div class="dot-block">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="chat-message">
+                <div class="wrap">
+                    <input id="chat-input" class="chat-input" type="text" placeholder="Send a message ..." value="">
+                    <div class="material-icons send-btn" id="send-btn">send</div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <script src="main.js"></script>
+
+
+</body>
+
+</html>

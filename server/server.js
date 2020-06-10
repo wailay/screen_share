@@ -9,15 +9,14 @@ var adj = require('./adj.json');
 var names = require('./name.json'); 
 var https = require('https').createServer(options, app);
 var io = require('socket.io')(https);
-
-app.use(express.static('public'));
+const path = require('path');
 
 var currentId;
 var users = {};
 
-
+app.use(express.static(path.resolve(__dirname, '../client/dist/')))
 app.get(['/*'] , (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
 
 
