@@ -8,18 +8,21 @@ const options = {
 var adj = require('./adj.json');
 var names = require('./name.json'); 
 var https = require('https').createServer(options, app);
-var io = require('socket.io')(https);
 const path = require('path');
 
 var currentId;
 var users = {};
-
+const production = process.env.NODE_ENV;
+var PORT = process.env.WS_PORT;
+if (production !== 'production') {
 app.use(express.static(path.resolve(__dirname, '../client/dist/')))
 app.get(['/*'] , (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
 });
-
-
+PORT = 3000;
+}
+console.log(PORT);
+var io = require('socket.io').listen(PORT);
 
 io.on('connection' , (socket) => {
     
@@ -116,14 +119,6 @@ io.on('connection' , (socket) => {
     });
     socket.on('disconnect', () => {
     });
-});
-
-// nm.on('connection', (socket) => {
-//     console.log('user conn to namespace ')
-//     console.log('ther are many users ')
-// });
-https.listen(3000, () => {
-    console.log('listening on port 3000');
 });
 
 function generateRandomName(){

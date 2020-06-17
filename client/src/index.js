@@ -2,7 +2,7 @@
 import socket from './socket.js';
 const userSpace = document.getElementById("user-space");
 const servers = {
-    'iceServers': [{ urls: 'stun:stun.split.lol:5349' }]
+    'iceServers': [{ urls: 'stun:stun.l.google.com:19302' }]
 };
 sessionStorage.clear();
 
