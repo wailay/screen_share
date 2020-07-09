@@ -1,13 +1,14 @@
 
 import socket from './socket.js';
+import './chat.js'
 const userSpace = document.getElementById("user-space");
+const mainVideo = document.getElementById("main-video");
 const servers = {
-    'iceServers': [{ urls: 'stun:stun.l.google.com:19302' }]
+    'iceServers': [{ urls: 'stun:stun.split.lol:3478' }]
 };
 sessionStorage.clear();
 
 const base62chars = [..."0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"]
-
 
 var clientSocketId;
 var clientUsername;
