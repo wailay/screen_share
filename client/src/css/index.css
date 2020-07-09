@@ -6,7 +6,7 @@
 
 .container {
     display: grid;
-    grid-template-columns : 366px 1366px auto;
+    grid-template-columns : auto auto auto;
     /* grid-gap : 0.5rem; */
 }
 .user-space {
