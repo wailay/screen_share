@@ -351,9 +351,8 @@ function showConn() {
         console.log(connections[username].getReceivers());
     }
 }
-
 initSession();
-
+mainVideo.addEventListener("mouseover", showControls);
 
 function enlargeUser(e) {
     e.stopPropagation();
@@ -363,5 +362,6 @@ function enlargeUser(e) {
     let mainVideo = document.getElementById("main-video");
 
     mainVideo.srcObject = userVideo.srcObject;
+    mainVideo.controls = true;
 
 }
