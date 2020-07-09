@@ -11,6 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,12 +19,14 @@
 
     <div class="top-bar">
         <p>Screen Share</p>
+        <a href="https://github.com/wailay/screen-share" target="_blank">
         <img style="width:32px;height:32px" src="images/github.png" />
+        </a>
     </div>
 
     <div class="container">
 
-        <div id="user-space" class="user-space"></div>
+        
         
         <div class="main-screen">
             <video id="main-video" class="shared-screen" muted autoplay></video>
@@ -55,6 +58,8 @@
 
 
         </div>
+
+        <div id="user-space" class="user-space"></div>
 
     </div>
     <script src="main.js"></script>
