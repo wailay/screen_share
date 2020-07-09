@@ -242,12 +242,11 @@ async function startSharing() {
             isSharing = true;
             
             stream = await navigator.mediaDevices.getDisplayMedia({
-                video: { width: 1366, height: 768, frameRate: 30 },
+                video: { width: 1920, height: 1080, frameRate: 30 },
                 audio: false
             });
-            stream.onended = e => {
-                console.log('stream ended');
-            }
+            stream.getVideoTracks()[0].onended = stopSharing;
+            
 
             shareIcon.style.display = 'none';
             stopIcon.style.display = 'block';
@@ -259,6 +258,7 @@ async function startSharing() {
         isSharing = false;
     }
 }
+
 
 function stopSharing() {
 
