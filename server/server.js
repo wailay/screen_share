@@ -15,14 +15,21 @@ var users = {};
 const production = process.env.NODE_ENV;
 var PORT = process.env.WS_PORT;
 if (production !== 'production') {
-app.use(express.static(path.resolve(__dirname, '../client/dist/')))
-app.get(['/*'] , (req, res) => {
-    res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
-});
-PORT = 3000;
+    PORT = 3000;
+    app.use(express.static(path.resolve(__dirname, '../client/dist/')))
+    app.get(['/*'] , (req, res) => {
+        res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
+    });
+    var io = require('socket.io')(https)
+    https.listen(PORT, () => {
+        console.log("listening dev mode on ", PORT)
+    });
+
+}else {
+    console.log(PORT);
+    var io = require('socket.io').listen(PORT);
 }
-console.log(PORT);
-var io = require('socket.io').listen(PORT);
+
 
 io.on('connection' , (socket) => {
     
