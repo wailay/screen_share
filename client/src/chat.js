@@ -31,7 +31,7 @@ function addMessage(username, message) {
     messageList.appendChild(messageBody);
 }
 function sendMessage() {
-
+    
     let msg = input.value;
     
     if (msg.length <= 0) return;
@@ -42,10 +42,14 @@ function sendMessage() {
     addMessage(clientUsername + " (You)", msg);
     
     socket.emit('message', roomId, msg, clientUsername);
+
+    input.value = "";
 }
 
 function checkEnterPressed(e) {
     //pressed enter
+    console.log('press enter')
+
     if (e.keyCode === 13 && e.srcElement.value.length > 0) {
         e.preventDefault();
         send.click();
