@@ -47,12 +47,10 @@ function sendMessage() {
 }
 
 function checkEnterPressed(e) {
-    //pressed enter
-    console.log('press enter')
 
     if (e.keyCode === 13 && e.srcElement.value.length > 0) {
         e.preventDefault();
-        send.click();
+        sendMessage();
         return;
     }
 }
@@ -85,7 +83,7 @@ socket.on('user_typing', (username) => {
 socket.on('new_message', (msg, username) => {
     addMessage(username, msg);
 });
-send.addEventListener("click", sendMessage);
+// send.addEventListener("click", sendMessage);
 input.addEventListener("input", userTyping);
 input.addEventListener("keyup", checkEnterPressed);
 

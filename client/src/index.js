@@ -352,7 +352,6 @@ function showConn() {
     }
 }
 initSession();
-mainVideo.addEventListener("mouseover", showControls);
 
 function enlargeUser(e) {
     e.stopPropagation();
