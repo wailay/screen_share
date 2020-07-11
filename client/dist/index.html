@@ -18,22 +18,25 @@
 
 
     <div class="top-bar">
-        <p>Screen Share</p>
-        <a href="https://github.com/wailay/screen-share" target="_blank">
+        <p style="padding-top : 5px" >Screen Share</p>
+        <a href="https://github.com/wailay/screen-share" target="_blank" >
         <img style="width:32px;height:32px" src="images/github.png" />
         </a>
     </div>
 
     <div class="container">
 
-        
-        
-        <div class="main-screen">
-            <video id="main-video" class="shared-screen" muted autoplay></video>
+        <div id="user-space" class="user-space">
+
         </div>
         
-        <div id="chat-space" class="chat-space">
+        <div class="main-screen">
+            <video id="main-video" muted autoplay></video>
+        </div>
 
+        
+        <div id="chat-space" class="chat-space">
+            
             <div class="all-messages">
                 <div id="message-list" class="message-list"></div>
             </div>
@@ -51,15 +54,14 @@
         
             <div class="chat-message">
                 <div class="wrap">
-                    <input id="chat-input" class="chat-input" type="text" placeholder="Send a message ..." value="">
-                    <div class="material-icons send-btn" id="send-btn">send</div>
+                    <input id="chat-input" class="chat-input" type="text" placeholder="Send a message" value="">
+                    
                 </div>
             </div>
 
 
         </div>
 
-        <div id="user-space" class="user-space"></div>
 
     </div>
     <script src="main.js"></script>
