@@ -1,3 +1,14 @@
 Screen sharing made easy with no signup directly on the browser
 
 Uses peer to peer WebRTC. 
+
+# Development 
+
+cd into `server` dir and
+
+  npm install
+
+start the dev server 
+
+  npm start
+  
