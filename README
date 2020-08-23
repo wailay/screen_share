@@ -6,9 +6,11 @@ Uses peer to peer WebRTC.
 
 cd into `server` dir and
 
-  npm install
+    npm install
 
 start the dev server 
 
-  npm start
+    npm start
+    
+the local server will be running at `https://localhost:3000`
   
