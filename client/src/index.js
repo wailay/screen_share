@@ -247,6 +247,8 @@ async function startSharing() {
             });
             stream.getVideoTracks()[0].onended = stopSharing;
 
+            document.querySelector(".user.me").style.backgroundColor = "transparent";
+            document.querySelector(".user.me").style.boxShadow = "none";
 
             shareIcon.style.display = 'none';
             stopIcon.style.display = 'block';
@@ -269,6 +271,9 @@ function stopSharing() {
 
     shareIcon.style.display = 'block';
     stopIcon.style.display = 'none';
+
+    document.querySelector(".user.me").style.backgroundColor = "rgb(190, 10, 94)";
+    document.querySelector(".user.me").style.boxShadow = "0 4px 6px 0 hsla(0, 0%, 0%, 0.2)";
 
     shareIcon.disabled = false;
     stopIcon.disabled = true;

@@ -181,6 +181,14 @@
     color: rgb(196, 196, 196);
    
 }
+
+.message-list {
+    margin-top: 50px;
+}
+.message-username {
+    opacity: 0.4;
+    text-align: right;
+}
 .all-messages {
     height: auto;
     min-height : calc(100% - 40px);
