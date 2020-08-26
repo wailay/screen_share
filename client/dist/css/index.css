@@ -19,10 +19,26 @@
     width: 30px;
     height: 30px;
     position: absolute;
-    background-color: white;
+    border-radius: 50%;
     left: 10px;
     top: 10px;
     cursor: pointer;
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: grid;
+    place-content: center;
+    transition: 0.3s;
+}
+
+.toggle-chat-btn:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.toggle-chat-btn i {
+    color: #fff;
+    display: grid;
+    place-content: center;
+    transform: scale(1.6) rotate(-90deg);
     transition: 0.3s;
 }
 
@@ -63,10 +79,13 @@
     /* padding-top : 56.25%; */
     background-color: rgb(61, 61, 61);
     transition: 0.3s;
+    /* background-color: rgb(0, 0, 0); */
+
     
 }
 #main-video {
     width: 100%;
+    height: 100%;
     background-color: rgb(0, 0, 0);
 
 }
@@ -281,4 +300,9 @@ body {
 }
 .expand-shrink-video .toggle-chat-btn {
     left: -45px;
+    background-color: rgb(39, 39, 39);
+}
+
+.expand-shrink-video .toggle-chat-btn i {
+    transform: scale(1.6) rotate(90deg);
 }
