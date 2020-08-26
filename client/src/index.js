@@ -144,7 +144,7 @@ function createRTCConnection(username, socketId) {
         video.srcObject = e.streams[0];
     }
 
-    
+
     conn.onnegotiationneeded = async (e) => {
         try {
 
@@ -163,7 +163,7 @@ function createRTCConnection(username, socketId) {
     }
 
     conn.onconnectionstatechange = e => {
-        
+
     }
 
     return conn;
@@ -173,11 +173,11 @@ async function sendOfferToPeer(username, remoteSocketId) {
     try {
         console.log('sending offer to peer');
         let rtcConn;
-        if (!connections[username]){
+        if (!connections[username]) {
             console.log('connections not existent creating new one');
             connections[username] = createRTCConnection(username, remoteSocketId);
         }
-        
+
         rtcConn = connections[username];
 
         for (const track of stream.getTracks()) {
@@ -233,20 +233,20 @@ async function startSharing() {
     try {
         if (!isSharing) {
 
-            
+
             let video = document.getElementById('my-screen');
             let shareIcon = document.getElementById('my-share-icon');
             let stopIcon = document.getElementById('my-stop-share-icon');
 
-            
+
             isSharing = true;
-            
+
             stream = await navigator.mediaDevices.getDisplayMedia({
                 video: { width: 1920, height: 1080, frameRate: 30 },
                 audio: false
             });
             stream.getVideoTracks()[0].onended = stopSharing;
-            
+
 
             shareIcon.style.display = 'none';
             stopIcon.style.display = 'block';
@@ -266,7 +266,7 @@ function stopSharing() {
     let video = document.getElementById("my-screen");
     let shareIcon = document.getElementById('my-share-icon');
     let stopIcon = document.getElementById('my-stop-share-icon');
-    
+
     shareIcon.style.display = 'block';
     stopIcon.style.display = 'none';
 
@@ -364,3 +364,11 @@ function enlargeUser(e) {
     mainVideo.controls = true;
 
 }
+
+// toggle chat 
+const expandArrow = document.querySelector(".toggle-chat-btn");
+const container = document.querySelector(".container");
+
+expandArrow.addEventListener("click", () => {
+    container.classList.toggle("expand-shrink-video");
+}) 

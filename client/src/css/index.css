@@ -1,58 +1,84 @@
 .top-bar {
-    padding: 15px;
+    width: 100%;
+    height: 8vh;
+    padding: 0 15px;
     display : flex;
     justify-content : space-between;
+    background-color: rgb(39, 39, 39);
+    color: white;
+    box-shadow: 0px 2px 1px 0px rgba(0,0,0,1);
+    z-index: 2;
+}
+
+.top-bar p, .top-bar a {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-chat-btn {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-color: white;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
 }
 
 .container {
-    display: grid;
-    grid-template-columns : auto auto auto;
-    /* grid-gap : 0.5rem; */
-}
-.user-space {
     display: flex;
     flex-wrap : nowrap;
-    overflow-y: auto;
+    height: 92vh;
+    width: 100vw;
+    /* position: relative; */
+    
+}
+.user-space {
+    height: 100%;
+    width: 20vw;
+    display: flex;
     flex-direction: column;
-    background-color : lightgray;
+    overflow-y: auto;
+    background-color : rgb(43, 40, 40);
     transition: 0.5s;
-
+    border-right: 1px solid rgb(77, 75, 75);
+    padding: 15px;
 }
-.main-screen {
-    /* margin: 30px 30px 30px 10px; */
-    /* width : 1280px;
-    height : 720px; */
-    width: 100%;
-    height : 100%;
-    /* width: 1366;
-    height : 751px; */
-    /* border : 1px solid blue; */
-    /* border-radius : 20px; */
-    background-color: rgb(0, 0, 0);
-}
-
-.chat-space {
-    width : 100%;
-    height : 100%;
-    margin : auto;
-    position: relative;
-    border-top : 6px solid violet;
-    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
-    border-radius : 4px;
-}
-
 .user {
-    width: auto;
-    height : 22%;
-    margin : 15px;
-    border-radius : 10px;
+    width: 100%;
+    height : 15%;
+    margin-bottom: 15px;
     background-color: rgb(30, 65, 97);
     transition: 0.2s;
     position : relative;
     overflow: hidden;
     flex : 0 0 auto;
     box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);   
+    
 }
+.main-screen {
+    width: 100%;
+    height: 100%;
+    /* padding-top : 56.25%; */
+    background-color: rgb(61, 61, 61);
+    
+    
+}
+#main-video {
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+
+}
+.chat-space {
+    height: 100%;
+    width: 20vw;
+    background-color: rgb(46, 46, 46);
+    border-left : 1px solid rgb(77, 75, 75);
+    transition: 0.5s;
+    padding-bottom : 10px;
+    position: relative;
+}
+
 .me {
     background-color: rgb(190, 10, 94);
 }
@@ -67,16 +93,18 @@
     transition : 0.5s;
     user-select: none;
     display: inline-block;
+    position : absolute;
+    left : 0;
+    top : 0;
 }
 .user:hover > .username {
     background-color: rgba(20, 19, 19, 0.678);
 }
 
 .shared-screen {
-    /* z-index : 100; */
+    
     width : 100%;
     height : 100%;
-    pointer-events: none;
 }
 .icon {
     position : absolute;
@@ -108,12 +136,8 @@
 
 
 .wrap {
-    position: relative;
-}
-.chat-message {
-    width : 100%;
-    position : absolute;
-    bottom : 0;
+    
+    width: 100%;
 }
 
 .send-btn {
@@ -121,11 +145,20 @@
     cursor: pointer;
 }
 .chat-input {
+    display: block;
     border : none;
-    min-width : calc(100% - 105px);
-    background-color : hsl(220, 12%, 95%);
+    width: 100%;
+    background-color : hsl(240, 1%, 35%);
     padding : 10px;
-    z-index: 100;
+    /* outline: none; */
+    border-radius: 5px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.chat-input::placeholder {
+    color: rgb(196, 196, 196);
+   
 }
 .all-messages {
     height: auto;
@@ -133,10 +166,15 @@
     max-height : calc(100% - 40px);
     overflow-y: scroll;
     overflow-x: hidden;
+    scrollbar-base-color: teal;
+    scrollbar-width: none;
+    color: white;
 }
 
 .message {
     margin : 15px 0 15px 5px;
+    padding-bottom: 10px;
+    border-bottom : 1px solid rgba(139, 139, 139, 0.212);
     
 }
 .message p {
@@ -196,13 +234,25 @@ animation-delay:300ms;
 .dot:nth-child(3){
 animation-delay:400ms;
 }
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+video::-webkit-media-controls-overlay-play-button {
+    display: none;
+}
+
+html {
+    overflow: hidden;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    
+    font-family: 'Share Tech', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   
   code {
@@ -212,4 +262,7 @@ body {
   
   * {
       box-sizing : border-box;
+      margin: 0;
+      padding: 0;
   }
+

@@ -15,31 +15,42 @@
     align-items: center;
 }
 
+.toggle-chat-btn {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-color: white;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
 .container {
     display: flex;
     flex-wrap : nowrap;
     height: 92vh;
+    width: 100vw;
     /* position: relative; */
     
 }
 .user-space {
     height: 100%;
-    width: 266px;
+    width: 15vw;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     background-color : rgb(43, 40, 40);
-    transition: 0.5s;
+    /* transition: 0.5s; */
     border-right: 1px solid rgb(77, 75, 75);
-    padding: 15px;
+    padding: 10px;
 }
 .user {
     width: 100%;
-    height : 15%;
+    height : 20%;
     margin-bottom: 15px;
     background-color: rgb(30, 65, 97);
-    transition: 0.2s;
+    /* transition: 0.2s; */
     position : relative;
     overflow: hidden;
     flex : 0 0 auto;
@@ -47,11 +58,11 @@
     
 }
 .main-screen {
-    width: 100%;
+    width: 65vw;
     height: 100%;
     /* padding-top : 56.25%; */
     background-color: rgb(61, 61, 61);
-    
+    transition: 0.3s;
     
 }
 #main-video {
@@ -61,15 +72,14 @@
 }
 .chat-space {
     height: 100%;
-    width: 400px;
+    width: 20vw;
     background-color: rgb(46, 46, 46);
     border-left : 1px solid rgb(77, 75, 75);
-    transition: 0.5s;
+    /* transition: 0.5s; */
     padding-bottom : 10px;
-    /* transform: translateX(100%); */
+    position: relative;
+    transition: 0.3s;
 }
-
-
 
 .me {
     background-color: rgb(190, 10, 94);
@@ -82,7 +92,7 @@
     border-radius : 4px;
     color: white;
     font-weight: 500;
-    transition : 0.5s;
+    /* transition : 0.5s; */
     user-select: none;
     display: inline-block;
     position : absolute;
@@ -101,7 +111,7 @@
 .icon {
     position : absolute;
     color: rgba(255, 255, 255, 0.795);
-    transition : 0.5s;
+    /* transition : 0.5s; */
     bottom : 0;
     right : 0;
     cursor: pointer;
@@ -258,3 +268,17 @@ body {
       padding: 0;
   }
 
+/* container */
+.expand-shrink-video .user-space {
+    width: 15vw;
+}
+.expand-shrink-video .main-screen {
+    width: 85vw;
+}
+.expand-shrink-video .chat-space {
+    width: 0;
+    border: none;
+}
+.expand-shrink-video .toggle-chat-btn {
+    left: -45px;
+}
